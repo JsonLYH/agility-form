@@ -1,0 +1,69 @@
+{
+  "name": "agility-form",
+  "version": "1.0.0",
+  "description": "基于Vue2+ElementUI开发的快速表单生成工具,通过JSON即可快速进行中后台表单、业务赋能.",
+  "license": "MIT",
+  "private": false,
+  "author": {
+    "name": "lyhJson",
+    "email": "2220555360@qq.com"
+  },
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lib": "vue-cli-service build --target lib --name agility-form --dest lib packages/index.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "files": [
+    "lib",
+    "types/*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JsonLYH/agility-form.git"
+  },
+  "keywords": [
+    "agility-form",
+    "lowcode",
+    "vue-rocket",
+    "rocket-render"
+  ],
+  "main": "lib/agility-form.umd.js",
+  "unpkg": "lib/agility-form.umd.js",
+  "style": "lib/agility-form.css",
+  "bugs": {
+    "url": "https://github.com/JsonLYH/agility-form/issues"
+  },
+  "homepage": "https://github.com/JsonLYH/agility-form#readme",
+  "dependencies": {
+    "element-ui": "^2.15.13",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.0",
+    "@vue/cli-plugin-router": "^4.5.0",
+    "@vue/cli-service": "^4.5.0",
+    "@vuepress/plugin-back-to-top": "^1.9.10",
+    "async-validator": "^4.2.5",
+    "babel-eslint": "^10.1.0",
+    "core-js": "^3.8.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.4.1",
+    "sass": "^1.43.4",
+    "sass-loader": "10.1.0",
+    "vue-template-compiler": "^2.6.14",
+    "vuepress": "^1.9.10",
+    "vuepress-plugin-auto-sidebar": "^2.3.2",
+    "vuepress-plugin-demo-container": "^0.2.0",
+    "vuepress-plugin-smooth-scroll": "^0.0.10",
+    "webpack": "~4.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
