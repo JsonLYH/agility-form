@@ -1,5 +1,5 @@
 <template>
-  <div class="rocket-table" :class="{ auto: isFullScreen }" :id="createTableId">
+  <div class="agility-table-container" :class="{ auto: isFullScreen }" :id="createTableId">
     <div
       class="action-header"
       v-if="
@@ -69,12 +69,12 @@
           <!-- 工具条 -->
           <tool-bar
             v-if="config.toolbar"
-            :column="config.columns"
+            :columns="config.columns"
             :id="createTableId"
             @handleReload="handleReload"
             @handleDensity="handleDensity"
             @handleColumn="handleColumn"
-            @handleFullScreen="isFullScreen = $event"
+            @fullScreenChange="isFullScreen = $event"
           />
         </div>
       </template>
@@ -94,13 +94,13 @@
           pagination: null,
           showPagination: null,
           toolbar: null,
-          actionList: null,
+          actionList: null
         }"
         v-on="$listeners"
         :cell-style="getCellStyle"
       >
         <template v-for="(item, i) in config.columns">
-          <!-- 处理多选 -->
+          <!-- 多选框 -->
           <el-table-column
             v-if="item.type === 'selection'"
             :key="`col-index-${i}`"
@@ -211,8 +211,7 @@ export default {
   },
   data() {
     return {
-      size:
-        (this.json && this.json.size) || this.$attrs.size || this.$agility.size,
+      size:(this.json && this.json.size) || this.$attrs.size || this.$agility.size,
       isFullScreen: false,
       pageSize: 0, // 缓存每页条数，只有在切换每页条数时使用
     };
@@ -351,7 +350,7 @@ export default {
 </script>
 
 <style lang="scss">
-.rocket-table {
+.agility-table-container {
   border-radius: 2px;
   background: #ffffff;
   padding-bottom: 20px;

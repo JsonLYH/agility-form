@@ -32,7 +32,7 @@ Vue.use(agilityForm,{
     toolbar:true,
     align:'center',
     stripe:true,
-    border:true,
+    border:false,
     showPagination:true,
     pageSize:20
 });

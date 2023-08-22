@@ -1,4 +1,4 @@
-# RocketTable 组件使用
+# agilityTable 组件使用
 
 基础表格组件，基于 JSON 动态生成固定的基础表格，支持原生大部分的属性和事件，目前只有个别事件是自定义。
 
@@ -11,7 +11,7 @@
 5. 多个链接(link)渲染、图片渲染、url 渲染、badge 状态渲染
 6. 特殊数据格式化(formatter)
 7. 操作区域权限控制（创建、编辑、删除）
-8. 表格列排序、表头跨列、数据跨行
+8. 表格列排序、表头跨列、合并行或列
 9. 通过 v-bind="$attrs"和v-on="$listners"保留大部分原生属性和事件
 10. 支持表格索引列、支持表格多选功能
 11. 支持表格自定义列
@@ -22,12 +22,13 @@
 :::demo
 
 ```html
+<!-- 表单区域 -->
 <agilitySearchForm
   :json="searchJson"
   :model.sync="queryForm"
   @search="getTableList"
 />
-<!-- 列表区域 -->
+<!-- 表格区域 -->
 <agilityTable
   :json.sync="tableJson"
   @handleCellClick="handleCellClick"
@@ -159,7 +160,7 @@
               ],
             },
           ],
-          data: [],
+          data:[{uid:131}],
           pagination: {
             pageNum: 1,
             total: 0,
@@ -232,6 +233,7 @@
 :::demo
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json.sync="tableJson" @handleChange="getTableList" />
 <script>
   export default {
@@ -294,6 +296,7 @@
 :::demo 通过 span 控制数据跨行
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json="tableJson" />
 <script>
   export default {
@@ -325,7 +328,7 @@
               label: '用户ID',
             },
           ],
-          data: [],
+          data: [{uid:45645}],
           pagination: { page: 1 },
         },
       };
@@ -352,6 +355,8 @@
 
 :::
 
+> 封装前的element-ui， el-table-column 里面嵌套 el-table-column，就可以实现多级表头。
+
 ## 数据跨行
 
 > 基于 span-method 可实现数据跨行，跨列，用法同官方教程。
@@ -359,6 +364,7 @@
 :::demo 动态绑定 span-method 可实现数据跨行
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json="tableJson" />
 <script>
   export default {
@@ -425,6 +431,7 @@
 :::demo 通过 type 可设置渲染类型
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json="tableJson" />
 <script>
   export default {
@@ -491,6 +498,7 @@
 :::demo 通过 type 可设置渲染类型
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json="tableJson" @handleCellClick="handleCellClick" />
 <script>
   export default {
@@ -587,6 +595,7 @@
 :::demo 通过 type 可设置当前列为自定义列
 
 ```html
+<!-- 表格区域 -->
 <agilityTable :json="tableJson">
   <template v-slot:copy="scope">
     <el-button
@@ -669,8 +678,9 @@
 ```html
 <!-- 使用配置方式 -->
 <agilityTable :json="tableJson" />
-<!-- 使用插槽方式 -->
+<!-- 利用插槽自定义操作按钮 -->
 <agilityTable :json="tableJson">
+  <!-- 自定义操作按钮 -->
   <template v-slot:action>
     <el-button type="primary" v-if="showCreate">创建用户</el-button>
   </template>
@@ -722,7 +732,6 @@
       return {
         tableJson: {
           title: '用户列表',
-          // 通过permission来控制显示和隐藏
           actionList: [{ text: '创建用户' }],
           columns: [
             {
@@ -755,10 +764,10 @@
                   },
                 },
               ],
-            },
+            }
           ],
           data: [{ uid: 1 }, { uid: 2 }], // 表格渲染数据
-          pagination: { page: 1 },
+          pagination: { pageNum: 1 },//分页器
         },
       };
     },
@@ -776,7 +785,7 @@
 
 > permission 用来控制操作按钮或者列表中的按钮的显示和隐藏，也可以直接使用函数来处理更加方便。
 
-## RocketTable - json 参数
+## agilityTable - json 参数
 
 | 参数       | 说明                          | 类型          | 可选值       | 默认值 |
 | :--------- | :---------------------------- | :------------ | :----------- | :----: |
@@ -786,9 +795,9 @@
 | pagination | 表格分页对象,需要添加 sync    | Object        | pagination   |   无   |
 | showPagination      | 显示分页控件                  | Boolean       | `true/false` |  true  |
 | toolbar    | 显示工具条                    | Boolean       | `true/false` |  true  |
-| spanMethod | 数据跨行处理                  | fn()          | 参考 Element |   无   |
+| spanMethod | 对数据进行合并行、列                  | Function()          | 参考 Element |   无   |
 
-## RocketTable - json - columns 对象
+## agilityTable - json > columns > item 对象
 
 | 参数                | 说明                           | 类型             | 可选值                |   默认值   |
 | :------------------ | :----------------------------- | :--------------- | :-------------------- | :--------: |
@@ -796,7 +805,7 @@
 | label               | 列头                           | String           | 无                    |     无     |
 | width               | 设置列宽度                     | Number           | 无                    |     无     |
 | type                | 列特殊类型显示                 | String           | 参考 column-type      |     无     |
-| list                | 显示操作列表                   | Array            | 参考 column-list      |     无     |
+| list                | 在表格内的操作列进行展示                  | Array            | 参考 column-list      |     无     |
 | sortable            | 是否排序                       | Boolean          | `true/false/custom`   |     无     |
 | sortOrders          | 设置排序方式                   | Array            | 参考 Element          |     无     |
 | span                | 多级表头                       | Array            | 参考示例              |     无     |
@@ -824,7 +833,7 @@
 | pageSize | 每页条数 | Number | 可不填   |   20   |
 | total    | 总条数   | Number | 动态赋值 |   无   |
 
-## column - type
+## agilityTable - json > columns > item > type
 
 > 主要用于对列数据进行处理，比如：点击、图片、链接、操作按钮等
 
@@ -858,10 +867,10 @@
 
 | 参数              | 说明          | 类型                     | 可选值           | 默认值 |
 | :---------------- | :------------ | :----------------------- | :--------------- | :----: |
-| @handleChange     | 页码/条数变动 | fn(page)                 | 跟列表方法一致   |   无   |
-| @handleAction     | 操作按钮点击  | fn({index,row,text})     | 参考上文使用方法 |   无   |
-| @handleCellClick  | 单元格点击    | fn({row,prop,link})      | 参考上文使用方法 |   无   |
-| @sort-change      | 本地排序事件  | fn({column,prop,order }) | 参考上文使用方法 |   无   |
-| @selection-change | 多选框        | fn([row])                | 参考 ElmentUI    |   无   |
+| @handleChange     | 页码/条数变动 | Function(page)                 | 跟列表方法一致   |   无   |
+| @handleAction     | 操作按钮点击  | Function({index,row,text})     | 参考上文使用方法 |   无   |
+| @handleCellClick  | 单元格点击    | Function({row,prop,link})      | 参考上文使用方法 |   无   |
+| @sort-change      | 本地排序事件  | Function({column,prop,order }) | 参考上文使用方法 |   无   |
+| @selection-change | 多选框        | Function([row])                | 参考 ElmentUI    |   无   |
 
 > 目前只有@handleChange、@handleAction、@handleCellClick 为新增自定义事件，其它为原生事件

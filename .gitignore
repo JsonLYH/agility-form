@@ -11,5 +11,8 @@ yarn-error.log*
 # Editor directories and files
 .idea
 
+#vscode config
+.vscode
+
 #vscode history file
 .history

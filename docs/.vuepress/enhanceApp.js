@@ -5,5 +5,7 @@ export default ({
   Vue
 }) => {
   Vue.use(ElementUI)
-  Vue.use(agilityForm)
+  Vue.use(agilityForm, {
+    border:true,
+  })
 }

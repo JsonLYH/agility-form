@@ -20,15 +20,15 @@ const install = function (Vue, options = {}) {
         // 表格全局配置
         agilityTable: {
             // 是否展示工具条
-            toolbar: !isEmpty(options.toolbar) || true,
+            toolbar: !isEmpty(options.toolbar) ? options.toolbar : true,
             // 表格列对齐方式
             align: options.align || 'center',
             // 表格是否显示斑马线
-            stripe: !isEmpty(options.stripe) || true,
+            stripe: !isEmpty(options.stripe) ? options.stripe : true,
             // 表格是否显示边框
-            border: !isEmpty(options.border) || true,
+            border: !isEmpty(options.border) ? options.border : true,
             // 是否显示分页器
-            showPagination: !isEmpty(options.showPagination) || true,
+            showPagination: !isEmpty(options.showPagination) ? options.showPagination : true,
             // 全局每页条数
             pageSize: options.pageSize || 20,
             // 表格无数据时展示内容
@@ -36,6 +36,7 @@ const install = function (Vue, options = {}) {
         },
         agilityDesc: {},
     };
+    console.log(config);
     Vue.prototype.$agility = config;
 }
 

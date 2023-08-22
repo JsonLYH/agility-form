@@ -12,6 +12,6 @@ body, html, #app{
   padding: 0;
 }
 div{
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 </style>

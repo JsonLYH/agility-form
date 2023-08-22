@@ -133,7 +133,8 @@
 export default {
   name: 'ToolBar',
   props: {
-    column: {
+    // 父组件传过来的列数据
+    columns: {
       type: Array,
       default() {
         return [];
@@ -164,7 +165,7 @@ export default {
     this.$nextTick(() => {
       const list = [];
       const keys = [];
-      this.column.map((item) => {
+      this.columns.map((item) => {
         list.push({
           id: item.prop,
           ...item,
@@ -185,9 +186,11 @@ export default {
     handleDensity(val) {
       this.$emit('handleDensity', val);
     },
-    // 表格数据过滤
+    // 表格数据过滤（复选框被点击时触发）
     handleColumn(curNode, { checkedNodes }) {
+      // 所选到的column节点集合
       const list = checkedNodes.slice();
+      // 发射改变列的事件
       this.$emit('handleColumn', list);
     },
     // 内容区全屏
@@ -195,6 +198,7 @@ export default {
       if (!this.isFullScreen) {
         const el = document.getElementById(this.id);
         this.isFullScreen = true;
+        // 开启全屏
         const fn =
           el.requestFullScreen ||
           el.webkitRequestFullScreen ||
@@ -204,6 +208,7 @@ export default {
       } else {
         this.isFullScreen = false;
         const el = document;
+        // 退出全屏
         const fn =
           el.exitFullscreen ||
           el.webkitCancelFullScreen ||
@@ -211,7 +216,8 @@ export default {
           el.msExitFullscreen;
         if (fn) fn.call(el);
       }
-      this.$emit('handleFullScreen', this.isFullScreen);
+      // 发射全屏change事件
+      this.$emit('fullScreenChange', this.isFullScreen);
     },
   },
 };

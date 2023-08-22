@@ -14,9 +14,10 @@
     </template>
     <template slot="header" v-if="item.tips">
       <el-tooltip :content="item.tips" placement="top">
-        <span
-          >{{ item.label }}<i class="el-icon-info" style="margin-left: 3px"></i
-        ></span>
+        <span>
+          {{ item.label }}
+          <i class="el-icon-info" style="margin-left: 3px"></i>
+        </span>
       </el-tooltip>
     </template>
     <!-- 自定义单元格 -->
