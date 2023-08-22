@@ -6,6 +6,7 @@
     :show-overflow-tooltip="handleToolTip(item)"
   >
     <template v-if="item.span">
+      <!-- 组件递归组件，实现多级表头 -->
       <Column
         v-for="(item, index) in item.span"
         :key="index"

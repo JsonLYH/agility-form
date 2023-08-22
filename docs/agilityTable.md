@@ -357,7 +357,7 @@
 
 > 封装前的element-ui， el-table-column 里面嵌套 el-table-column，就可以实现多级表头。
 
-## 数据跨行
+## 合并行或列
 
 > 基于 span-method 可实现数据跨行，跨列，用法同官方教程。
 
@@ -365,12 +365,13 @@
 
 ```html
 <!-- 表格区域 -->
-<agilityTable :json="tableJson" />
+<agilityTable :json="tableJsonCol" />
+<agilityTable :json="tableJsonRow" />
 <script>
   export default {
     data() {
       return {
-        tableJson: {
+        tableJsonCol: {
           columns: [
             {
               prop: 'uid',
@@ -378,28 +379,57 @@
               type: 'click', //此列可点击
             },
             {
-              prop: 'cname',
+              prop: 'name',
               label: '用户名称', // 普通列渲染
               showOverflowTooltip: true, // true/false/不填，默认为true
             },
             {
-              prop: 'intrest_name',
+              prop: 'intrestName',
               label: '兴趣',
             },
           ],
-          data: [], // 表格渲染数据
+          data: [{uid:1,name:'张三',intrestName:'兴趣'}], // 表格渲染数据
           spanMethod: ({ row, column, rowIndex, columnIndex }) => {
-            if (columnIndex < 1) {
-              if (rowIndex % 2 === 0) {
-                return {
-                  rowspan: 2,
-                  colspan: 1,
-                };
+            console.log(rowIndex,columnIndex)
+            if(rowIndex == 0){
+              if(columnIndex == 0){
+                return [1,3];
+              }else if(columnIndex == 1){
+                return [0,0]
               }
             }
           },
           pagination: { pageNum: 1 },
         },
+        tableJsonRow: {
+          columns: [
+            {
+              prop: 'uid',
+              label: '用户ID',
+              type: 'click', //此列可点击
+            },
+            {
+              prop: 'name',
+              label: '用户名称', // 普通列渲染
+              showOverflowTooltip: true, // true/false/不填，默认为true
+            },
+            {
+              prop: 'intrestName',
+              label: '兴趣',
+            },
+          ],
+          data: [{uid:1,name:'张三',intrestName:'兴趣'},{uid:2,name:'李四',intrestName:'兴趣'}], // 表格渲染数据
+          spanMethod: ({ row, column, rowIndex, columnIndex }) => {
+            if(columnIndex == 0){
+              if(rowIndex==0){
+                return{colspan:1,rowspan:2}
+              }else{
+                return [0,0]
+              }
+            }
+          },
+          pagination: { pageNum: 1 },
+        }
       };
     },
     mounted() {
@@ -408,10 +438,10 @@
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
       getTableList(pageNum = 1) {
-        this.tableJson.pagination.pageNum = pageNum;
+        this.tableJsonRow.pagination.pageNum = pageNum;
         const data = {
           ...this.queryForm, // 查询表单数据
-          ...this.tableJson.pagination, // 默认分页数据
+          ...this.tableJsonRow.pagination, // 默认分页数据
         };
         // this.$request.get('/basic/list', data).then((res) => {
         //   this.tableJson.data = res.list.slice(0, 5);
@@ -720,7 +750,7 @@
 
 :::
 
-### 操作栏按钮权限用法[数据权限]
+### 表格操作列的按钮权限判断
 
 :::demo 根据状态来判断是否显示
 
@@ -804,7 +834,7 @@ data(){
 | pagination | 表格分页对象,需要添加 sync    | Object        | pagination   |   无   |
 | showPagination      | 显示分页控件                  | Boolean       | `true/false` |  true  |
 | toolbar    | 显示工具条                    | Boolean       | `true/false` |  true  |
-| spanMethod | 对数据进行合并行、列                  | Function()          | 参考 Element |   无   |
+| spanMethod | 对数据进行合并行、列                  | Function({ row, column, rowIndex, columnIndex })          | 参考 Element |   无   |
 
 ## 单元格对象属性
 json > columns:[{...}] > {...}
@@ -835,15 +865,12 @@ data(){
 | formatter           | 数据格式化，同官方             | String           | `--`                  |     无     |
 | filter              | 过滤器，用来处理日期和金额     | String           | 'money/date/datetime' |     无     |
 | showOverflowTooltip | 当内容过长被隐藏时显示 tooltip | Boolean          | true                  | true |
-| permissions         | 控制按钮是否显示               | Boolean/Function | true                  | flase/true |
 
 > showOverflowTooltip 官方默认为关闭，为了表格体验，统一开启，也可以手动关闭
 
 > type=action 时，只有设置了 width 才会关闭 tool-tip，否则也会开启。
 
-> permissions 对于有 RBAC 权限设置的系统，非常管用，配置如果觉得麻烦，可以使用函数定义，更加简单。
-
-## pagination
+## pagination对象属性
 
 > 默认只需要设置 total 即可，如果产品有要求，可手动调整
 > 表格中分页控件以及工具条刷新按钮等点击，会触发 pagination 对象同步修改，所以参数需要加.sync
