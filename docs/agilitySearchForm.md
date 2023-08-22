@@ -87,13 +87,13 @@
 | 参数         | 说明                           | 类型                              | 可选值   | 默认值 |
 | :----------- | :----------------------------- | :-------------------------------- | :------- | :----: |
 | type         | 控件类型                       | String                            | 参考控件类型列表 |   无   |
+| arrow        | 当type=number类型时有效 | Boolean | true/false | true |
 | model        | 表单数据字段属性 | String                            | 无       |   无   |
 | options      | 通用配置列表                   | Array                             | 无       |   无   |
-| change       | 所有 UI 组件的自定义事件       | Function(currentVal,formData,field,json) | 无       |   无   |
+| change       | 所有 UI 组件的自定义事件       | Function(currentVal,formData,field,json) 分别对应当前值、表单所有值、当前field字段、当前表单的所有json配置项| 无       |   无   |
 | asyncOptions | 动态拉取下拉值                 | Function():Array                          | 无       |   无   |
 
-> 表格列出来的为自定义参数，其它参数请参考原生 ElementUI
-> 当 type='number'时，会生成 H5 原生数字框，鼠标悬浮时会出现数字上下滚动箭头，通过设置 arrow:false，可手动隐藏箭头
+
 
 ## 事件
 
@@ -102,5 +102,3 @@
 | @search | 点击查询触发函数 | Function(pageNum) | 无     |   无   |
 | @reset | 点击重置触发函数 | Function(pageNum) | 无     |   无   |
 
-
-> 所有组件支持 change 事件，可做自定义业务处理，返回{currentVal,formData,field,json}，分别对应当前值，表单所有值和当前 field

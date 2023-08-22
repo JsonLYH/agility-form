@@ -785,7 +785,16 @@
 
 > permission 用来控制操作按钮或者列表中的按钮的显示和隐藏，也可以直接使用函数来处理更加方便。
 
-## agilityTable - json 参数
+## json 参数
+```js
+data(){
+  return {
+    json:{
+      ...
+    }
+  }
+}
+```
 
 | 参数       | 说明                          | 类型          | 可选值       | 默认值 |
 | :--------- | :---------------------------- | :------------ | :----------- | :----: |
@@ -797,7 +806,19 @@
 | toolbar    | 显示工具条                    | Boolean       | `true/false` |  true  |
 | spanMethod | 对数据进行合并行、列                  | Function()          | 参考 Element |   无   |
 
-## agilityTable - json > columns > item 对象
+## 单元格对象属性
+json > columns:[{...}] > {...}
+```js
+data(){
+  return{
+    json:[
+      columns:[{
+        ...
+      }]
+    ]
+  }
+}
+```
 
 | 参数                | 说明                           | 类型             | 可选值                |   默认值   |
 | :------------------ | :----------------------------- | :--------------- | :-------------------- | :--------: |
@@ -813,7 +834,7 @@
 | tips                | 表头增加提示语                 | String           | `--`                  |     无     |
 | formatter           | 数据格式化，同官方             | String           | `--`                  |     无     |
 | filter              | 过滤器，用来处理日期和金额     | String           | 'money/date/datetime' |     无     |
-| showOverflowTooltip | 当内容过长被隐藏时显示 tooltip | Boolean          | true                  | flase/true |
+| showOverflowTooltip | 当内容过长被隐藏时显示 tooltip | Boolean          | true                  | true |
 | permissions         | 控制按钮是否显示               | Boolean/Function | true                  | flase/true |
 
 > showOverflowTooltip 官方默认为关闭，为了表格体验，统一开启，也可以手动关闭
@@ -833,8 +854,21 @@
 | pageSize | 每页条数 | Number | 可不填   |   20   |
 | total    | 总条数   | Number | 动态赋值 |   无   |
 
-## agilityTable - json > columns > item > type
-
+## 单元格类型
+json > columns:[{...}] > {...} > type
+```js
+data(){
+  return {
+    json:[
+      columns:[
+        {
+          type:'...'
+        }
+      ]
+    ]
+  }
+}
+```
 > 主要用于对列数据进行处理，比如：点击、图片、链接、操作按钮等
 
 | 参数      | 说明                                    | 类型   | 可选值         | 默认值 |
