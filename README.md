@@ -49,5 +49,5 @@ Vue.use(agilityForm);
   };
 </script>
 ```
-> 虽然是基于element-ui进行开发的，但是已经把element-ui相关样式整合在一起了，使用时无需再单独引入element-ui。
+> 虽然是基于element-ui进行开发的，但是已经把element-ui相关样式整合在一起了，使用时无需再单独引入element-ui,element-ui官方的元素您也可以直接使用。
 > 当然，如果您已经安装了element-ui,那也不影响。
