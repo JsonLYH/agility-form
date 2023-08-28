@@ -1,7 +1,7 @@
 module.exports = {
     title: 'agilityForm',
     description: '一款基于Vue2.6开发的表单和表格渲染组件',
-    base: '/',
+    base: '/agility-form-doc/',
     head: [
         [
             'link',

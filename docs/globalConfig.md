@@ -2,7 +2,9 @@
 
 | 参数           | 说明     | 类型   | 可选值   | 默认值 |
 | :------------- | :------- | :----- | :------- | :----: | --- |
-| size           | table、form的尺寸 | `String` | medium / small / mini |   small   |
+| elementuiGlobalConfig | elementui全局配置 | Object | 参考element-ui全局配置 |   { }   |
+| tableSize           | table的尺寸 | `String` | medium / small / mini |   small   |
+| formSize           | form的尺寸 | `String` | medium / small / mini |   small   |
 | fieldEmptyTxt | table某个字段为空时，展示的内容 | `String` | 无   |   --   |
 | tableEmptyText | table无数据时的提示语 | `String` | 无   |   暂无数据   | 
 | inline | form表单的布局 | `String` | flex/inline   |   flex   | 
@@ -17,15 +19,16 @@
 
 ```js
 // 导入包
-import ElementUI from 'element-ui';
 import agilityForm from 'agility-form';
 
 // 导入样式
-import 'element-ui/lib/theme-chalk/index.css';
 import 'agility-form/lib/agility-form.css';
-Vue.use(ElementUI);
 Vue.use(agilityForm,{
-    size:'small',
+    elementuiGlobalConfig:{
+        // 这里是elementui的全局配置
+    }
+    formSize:'small',
+    tableSize:'small',
     fieldEmptyTxt:'--',
     tableEmptyText:'暂无数据'
     inline:'flex',

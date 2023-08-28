@@ -16,8 +16,8 @@
             <div class="agility-action">
                 <el-button type="text" v-if="showFoldBtn" @click="isOpen = !isOpen" size="medium">{{ isOpen ? '收起' : '展开'
                 }}<i :class="[isOpen ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"></i></el-button>
-                <el-button type="primary" :size="$agility.size" @click="search">查询</el-button>
-                <el-button :size="$agility.size" @click="reset">重置</el-button>
+                <el-button type="primary" :size="$agility.formSize" @click="search">查询</el-button>
+                <el-button :size="$agility.formSize" @click="reset">重置</el-button>
             </div>
         </template>
         <!-- 行内布局-->
@@ -27,8 +27,8 @@
                     @input="(val) => handleInput(item, val)" />
             </template>
             <el-form-item>
-                <el-button type="primary" :size="$agility.size" @click="search">查询</el-button>
-                <el-button :size="$agility.size" @click="reset">重置</el-button>
+                <el-button type="primary" :size="$agility.formSize" @click="search">查询</el-button>
+                <el-button :size="$agility.formSize" @click="reset">重置</el-button>
             </el-form-item>
         </template>
     </el-form>
@@ -77,7 +77,7 @@ export default {
     },
     methods: {
         initSize() { 
-            let formHeight = this.sizeMap[this.$agility.size];
+            let formHeight = this.sizeMap[this.$agility.formSize];
             if (formHeight) {
                 this.formHeight = formHeight;
             } else { 

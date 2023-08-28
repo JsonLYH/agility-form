@@ -1,7 +1,10 @@
 import quickSearchForm from './agilitySearchForm/index.js'
 import agilityTable from './agilityTable/index.js'
 import { isEmpty } from './utils/commonUtils.js'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 const install = function (Vue, options = {}) {
+    Vue.use(ElementUI,options.elementuiGlobalConfig || {});
     // 表单搜索插件
     Vue.use(quickSearchForm);
     Vue.use(agilityTable);
@@ -10,7 +13,8 @@ const install = function (Vue, options = {}) {
          * form/table全局尺寸
          * medium / small / mini
          */
-        size: options.size || !isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small',
+        tableSize: options.tableSize || !isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small',
+        formSize: options.formSize || !isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small',
         // table列中字段为空时，默认显示内容
         fieldEmptyTxt: options.fieldEmptyTxt || '--',
         // 搜索表单全局配置
@@ -36,7 +40,6 @@ const install = function (Vue, options = {}) {
         },
         agilityDesc: {},
     };
-    console.log(config);
     Vue.prototype.$agility = config;
 }
 

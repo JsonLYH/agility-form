@@ -3,7 +3,7 @@
   <div class="tool-bar">
     <el-button-group>
       <!-- 刷新按钮 -->
-      <el-button @click="handleReload">
+      <el-button v-if="toolBarIncludes.includes('reload')" @click="handleReload">
         <el-tooltip class="item" effect="dark" content="刷新" placement="top">
           <svg
             viewBox="64 64 896 896"
@@ -22,7 +22,7 @@
       </el-button>
 
       <!-- 表格密度 ，加padding:0 是为了让里面的按钮填满 -->
-      <el-button style="padding: 0">
+      <el-button v-if="toolBarIncludes.includes('density')" style="padding: 0">
         <el-tooltip class="item" effect="dark" content="密度" placement="top">
           <el-dropdown trigger="click" @command="handleDensity">
             <el-button style="border: none">
@@ -50,7 +50,7 @@
       </el-button>
 
       <!-- 列设置 -->
-      <el-button style="padding: 0">
+      <el-button style="padding: 0" v-if="toolBarIncludes.includes('setColumn')">
         <el-tooltip class="item" effect="dark" content="列设置" placement="top">
           <el-dropdown trigger="click">
             <el-button style="border: none">
@@ -88,7 +88,7 @@
       </el-button>
 
       <!-- 全屏 -->
-      <el-button @click="handleFullScreen">
+      <el-button @click="handleFullScreen" v-if="toolBarIncludes.includes('fullScreen')">
         <el-tooltip class="item" effect="dark" content="全屏" placement="top">
           <span>
             <svg
@@ -133,6 +133,12 @@
 export default {
   name: 'ToolBar',
   props: {
+    toolBarIncludes: {
+      type: Array,
+      default() { 
+        return ['reload','density','setColumn','fullScreen'];
+      }
+    },
     // 父组件传过来的列数据
     columns: {
       type: Array,

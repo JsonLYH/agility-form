@@ -26,6 +26,7 @@
       <div v-if="item.type === 'index'">{{ scope.$index + 1 }}</div>
       <!-- 单个cell点击,通过prop可以获取是哪列触发的点击 -->
       <template v-if="item.type === 'click'">
+        <!-- 数据为空 -->
         <span
           v-if="
             !formatText(item, scope.row) ||
@@ -73,10 +74,17 @@
         v-if="item.type === 'url'"
         >{{
           String(
-            item.formatter ? item.formatter(scope.row) : scope.row[item.prop],
-          ) || '--'
-        }}</a
-      >
+            item.formatter ? item.formatter(scope.row) : scope.row[item.prop] || $agility.fieldEmptyTxt,
+          ) || $agility.fieldEmptyTxt
+        }}
+      </a>
+      <div v-else-if="item.type==='desensitize'">
+        {{ scope.row[`${item.prop}_desensitize`] ? 
+        item.formatter ? item.formatter(scope.row) : scope.row[`${item.prop}`].replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+        : scope.row[item.prop] }}
+        <i @click="scope.row[`${item.prop}_desensitize`] = !scope.row[`${item.prop}_desensitize`]" 
+        :class="scope.row[`${item.prop}_desensitize`]? item.unDesensitizeIcon || 'el-icon-lock' : item.desensitizeIcon || 'el-icon-unlock'"></i>
+      </div>
       <!-- 单个cell包含多个链接 -->
       <div v-else-if="item.type === 'link'">
         <span
@@ -139,6 +147,7 @@
 <script>
 import { formatMoney, formatDate } from '../../utils/commonUtils';
 export default {
+  inject: ['$tableThis'],
   name: 'Column',
   props: ['item'],
   computed: {
@@ -157,6 +166,13 @@ export default {
         return data || [];
       };
     },
+  },
+  data() {
+    return {
+  
+    };
+  },
+  mounted() {
   },
   methods: {
     /**

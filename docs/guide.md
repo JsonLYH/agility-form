@@ -10,12 +10,9 @@ yarn add agility-form -S
 
 ```js
 // 导入包
-import ElementUI from 'element-ui';
 import agilityForm from 'agility-form';
 // 导入样式
-import 'element-ui/lib/theme-chalk/index.css';
 import 'agility-form/lib/agility-form.css';
-Vue.use(ElementUI);
 Vue.use(agilityForm);
 ```
 
@@ -24,10 +21,10 @@ Vue.use(agilityForm);
 
 ```html
 <template>
-  <search-form
+  <agilitySearchForm
     :json="form"
     :model.sync="queryForm"
-    @handleQuery="getTableList"
+    @search="getTableData"
   />
 </template>
 <script>
@@ -48,4 +45,5 @@ Vue.use(agilityForm);
   };
 </script>
 ```
-> 由于该插件是基于element-ui组件库进行封装的，而本插件暂时没有把element-ui进行打包整合， 所以在使用时，记得单独导入element-ui组件库哦~
+> 虽然是基于element-ui进行开发的，但是已经把element-ui相关样式整合在一起了，使用时无需再单独引入element-ui。
+> 当然，如果您已经安装了element-ui,那也不影响。

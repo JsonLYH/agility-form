@@ -37,16 +37,24 @@
   },
   "homepage": "https://github.com/JsonLYH/agility-form#readme",
   "dependencies": {
-    "element-ui": "^2.15.13",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1"
   },
+  "peerDependencies": {
+    "element-ui": "^2.15.13"
+  },
+  "peerDependenciesMeta": {
+    "element-ui": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "element-ui": "^2.15.13",
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-plugin-router": "^4.5.0",
     "@vue/cli-service": "^4.5.0",
     "@vuepress/plugin-back-to-top": "^1.9.10",
-    "async-validator": "^4.2.5",
+    "async-validator": "^4.0.7",
     "babel-eslint": "^10.1.0",
     "core-js": "^3.8.3",
     "eslint": "^6.7.2",

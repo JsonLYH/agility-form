@@ -2,22 +2,7 @@
 
 基础表格组件，基于 JSON 动态生成固定的基础表格，支持原生大部分的属性和事件，目前只有个别事件是自定义。
 
-## 支持功能
-
-1. 基础表格
-2. 表格分页（可控制隐藏，默认显示）
-3. 工具条（刷新、表格密度、列设置、全屏）
-4. 单列可点击、多列可点击
-5. 多个链接(link)渲染、图片渲染、url 渲染、badge 状态渲染
-6. 特殊数据格式化(formatter)
-7. 操作区域权限控制（创建、编辑、删除）
-8. 表格列排序、表头跨列、合并行或列
-9. 通过 v-bind="$attrs"和v-on="$listners"保留大部分原生属性和事件
-10. 支持表格索引列、支持表格多选功能
-11. 支持表格自定义列
-12. 表格中的列表按钮，支持使用 permission 来控制显示和隐藏，permission 支持布尔、函数和对象等三种配置方式。
-
-## 基本用法[支持复选、单元格点击、图片、formatter、badge]
+## 基本用法（数据脱敏、复选框、单击、图片、url、操作列、工具条）
 
 :::demo
 
@@ -26,14 +11,14 @@
 <agilitySearchForm
   :json="searchJson"
   :model.sync="queryForm"
-  @search="getTableList"
+  @search="getTableData"
 />
 <!-- 表格区域 -->
 <agilityTable
   :json.sync="tableJson"
   @handleCellClick="handleCellClick"
   @handleOperate="handleOperate"
-  @handleChange="getTableList"
+  @handleChange="getTableData"
   @handleAction="handleAction"
 />
 <script>
@@ -51,22 +36,30 @@
           },
         ],
         tableJson: {
-          title: 'JSON配置表格',
-          actionList: [
-            {
-              type: 'primary',
-              text: '新增',
-            },
-            {
-              type: 'danger',
-              text: '删除',
-            },
-          ],
+          // title:'',
+          actionHeaderStyle:{
+            // 当没有设置title时，工具条、操作按钮默认是两边对齐的
+            justifyContent: 'flex-end'
+          },
           columns: [
             {
               prop: 'selection',
               type: 'selection',
               label: '选框',
+            },
+            {
+              prop: 'phone',
+              width:180,
+              desensitizeDefaultVal:false,
+              type: 'desensitize',
+              label: '手机联系人',
+            },
+            {
+              prop: 'phonea',
+              width:180,
+              desensitizeDefaultVal:true,
+              type: 'desensitize',
+              label: '手机联系人',
             },
             {
               prop: 'index',
@@ -97,7 +90,7 @@
             },
             {
               prop: 'user_site',
-              label: '网址',
+              label: 'url',
               type: 'url',
               showOverflowTooltip: false,
             },
@@ -160,7 +153,10 @@
               ],
             },
           ],
-          data:[{uid:131}],
+          data:[
+            {uid:131,phone:'17776607357',phonea:'11112222132131'},
+            {uid:134,phone:'17776607357',phonea:'11112222132131'}
+          ],
           pagination: {
             pageNum: 1,
             total: 0,
@@ -169,11 +165,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(pageNum = 1) {
+      getTableData(pageNum = 1) {
         this.tableJson.pagination.pageNum = pageNum;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -186,9 +182,9 @@
       },
       /**
        * 列点击
-       * 1. 只有其中一列可点击,通常只用row就够了，不需要根据prop做判断
+       * 1. 只有其中一列可点击,一般用row去判断就可以了，不需要根据prop判断
        * 2. 有多列可点击，根据prop判断是哪一列被触发了
-       * 3. 某一列有多个点击按钮，点击按钮的时候，会把对应的值回传回来(link)
+       * 3. 一列有多个点击按钮，点击的时候，会把对应的值传回来(link)
        */
       handleCellClick({ row, prop, link }) {
         // 如果是多个列都绑定了click事件，可根据prop来区分是哪一列
@@ -228,13 +224,13 @@
 
 ## 添加标题和操作按钮
 
-> 当标题和操作按钮同时存在时，分别左右排列，当只有操作按钮时，居左排列。工具条可以手动隐藏。
+> 标题、操作按钮、工具条的布局可以使用actionHeaderStyle属性进行调整（工具条可以通过toolbar设置隐藏）
 
 :::demo
 
 ```html
 <!-- 表格区域 -->
-<agilityTable :json.sync="tableJson" @handleChange="getTableList" />
+<agilityTable :json.sync="tableJson" @handleChange="getTableData" />
 <script>
   export default {
     data() {
@@ -269,11 +265,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(pageNum = 1) {
+      getTableData(pageNum = 1) {
         this.tableJson.pagination.pageNum = pageNum;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -334,11 +330,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(page = 1) {
+      getTableData(page = 1) {
         this.tableJson.pagination.page = page;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -355,11 +351,10 @@
 
 :::
 
-> 封装前的element-ui， el-table-column 里面嵌套 el-table-column，就可以实现多级表头。
 
 ## 合并行或列
 
-> 基于 span-method 可实现数据跨行，跨列，用法同官方教程。
+> 对标elementui的 span-method 方法，用法参考elementui官方教程。
 
 :::demo 动态绑定 span-method 可实现数据跨行
 
@@ -418,13 +413,26 @@
               label: '兴趣',
             },
           ],
-          data: [{uid:1,name:'张三',intrestName:'兴趣'},{uid:2,name:'李四',intrestName:'兴趣'}], // 表格渲染数据
+          data: [
+            {uid:1,name:'张三',intrestName:'兴趣'},
+            {uid:2,name:'李四',intrestName:'兴趣'},
+            {uid:3,name:'王五',intrestName:'兴趣'}
+          ], // 表格渲染数据
           spanMethod: ({ row, column, rowIndex, columnIndex }) => {
+            // 合并行
             if(columnIndex == 0){
               if(rowIndex==0){
                 return{colspan:1,rowspan:2}
-              }else{
+              }else if(rowIndex==1){
                 return [0,0]
+              }
+            }
+            // 合并列
+            if(rowIndex==2){
+              if(columnIndex==0){
+                return [1,3];
+              }else{
+                return [0,0];
               }
             }
           },
@@ -433,11 +441,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(pageNum = 1) {
+      getTableData(pageNum = 1) {
         this.tableJsonRow.pagination.pageNum = pageNum;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -454,9 +462,9 @@
 
 :::
 
-## 图片、网址、link 渲染
+## 图片、url、link 渲染
 
-> 单元格可渲染图片、网址、link 连接等，同时支持服务端返回 HTML 进行渲染。
+> 单元格可渲染图片、url、link 连接等，同时支持服务端返回 HTML 进行渲染。
 
 :::demo 通过 type 可设置渲染类型
 
@@ -481,8 +489,8 @@
               },
             },
             {
-              prop: 'user_site', // 网址渲染，默认新开窗口
-              label: '网址',
+              prop: 'user_site', // url渲染，默认新开窗口
+              label: 'url',
               type: 'url', //支持打开url地址
               showOverflowTooltip: false,
             },
@@ -502,11 +510,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(pageNum = 1) {
+      getTableData(pageNum = 1) {
         this.tableJson.pagination.pageNum = pageNum;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -601,11 +609,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(page = 1) {},
+      getTableData(page = 1) {},
       handleCellClick({ row, prop, link }) {
         if (prop === 'uid') {
           this.$message.success('点击了用户ID');
@@ -661,11 +669,11 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
       // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableList(page = 1) {
+      getTableData(page = 1) {
         this.tableJson.pagination.page = page;
         const data = {
           ...this.queryForm, // 查询表单数据
@@ -695,7 +703,7 @@
 
 :::
 
-## 权限介绍
+## 权限篇
 
 权限是比较重要和复杂的工作，权限一般分为：菜单权限、按钮权限、接口权限、数据权限。
 
@@ -737,10 +745,10 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
-      getTableList(page = 1) {
+      getTableData(page = 1) {
         this.showCreate = true;
       },
     },
@@ -802,10 +810,10 @@
       };
     },
     mounted() {
-      this.getTableList();
+      this.getTableData();
     },
     methods: {
-      getTableList(page = 1) {},
+      getTableData(page = 1) {},
     },
   };
 </script>
@@ -828,11 +836,13 @@ data(){
 
 | 参数       | 说明                          | 类型          | 可选值       | 默认值 |
 | :--------- | :---------------------------- | :------------ | :----------- | :----: |
+| actionHeaderStyle    | 可以自定义工具条的样式 | Object       | { } |   { }   |
 | loading    | 表格请求过程显示 loading 效果 | Boolean       | `true/false` |   无   |
 | columns    | 表格表头对象,需要添加 sync    | Array(Object) | 参考下文     |   无   |
 | data       | 表格数据渲染对象              | Array(Object) | 参考下文     |   无   |
 | pagination | 表格分页对象,需要添加 sync    | Object        | pagination   |   无   |
 | showPagination      | 显示分页控件                  | Boolean       | `true/false` |  true  |
+| toolBarIncludes    | 工具条项(当toolbar为true时，才生效)                   | Array       | ['reload','density','setColumn','fullScreen'] |  ['reload','density','setColumn','fullScreen']  |
 | toolbar    | 显示工具条                    | Boolean       | `true/false` |  true  |
 | spanMethod | 对数据进行合并行、列                  | Function({ row, column, rowIndex, columnIndex })          | 参考 Element |   无   |
 
@@ -862,7 +872,10 @@ data(){
 | span                | 多级表头                       | Array            | 参考示例              |     无     |
 | fieldEmptyTxt               | 当返回空的时候，设置默认显示值 | String           | `--`                  |     无     |
 | tips                | 表头增加提示语                 | String           | `--`                  |     无     |
-| formatter           | 数据格式化，同官方             | String           | `--`                  |     无     |
+| desensitizeDefaultVal   | 默认是否脱敏（当单元格类型为`desensitize`时，该配置才会生效）| Boolean | true/false | true |
+| unDesensitizeIcon | 非脱敏状态的icon图标（当单元格类型为`desensitize`时，该配置才会生效） | String | 参考elementui的icon或者阿里icon等图标库 | el-icon-unlock |
+| desensitizeIcon | 脱敏状态的icon图标（当单元格类型为`desensitize`时，该配置才会生效） | String | 参考elementui的icon或者阿里icon等图标库 | el-icon-lock |
+| formatter           | 单元格自定义处理函数(当单元格类型为`desensitize`时，默认脱敏展示的格式为`$1****$2`，您也可以使用formatter函数覆盖其规则)             | Function(scope.row)           | `--`                  |     无     |
 | filter              | 过滤器，用来处理日期和金额     | String           | 'money/date/datetime' |     无     |
 | showOverflowTooltip | 当内容过长被隐藏时显示 tooltip | Boolean          | true                  | true |
 
@@ -900,6 +913,7 @@ data(){
 
 | 参数      | 说明                                    | 类型   | 可选值         | 默认值 |
 | :-------- | :-------------------------------------- | :----- | :------------- | :----: |
+| desensitize     | 脱敏类型(可以进行遮掩码的切换)           | String |               |    无  |
 | index     | 列索引                                  | String | 无             |   无   |
 | click     | type 为 click 时，该列可点击            | String | 无             |   无   |
 | image     | type 为 image 时，会自动渲染成图片      | String | 无             |   无   |
@@ -913,7 +927,21 @@ data(){
 
 > 当 type='slot'时，需要指定 slotName，这样才能在 base-table 中嵌套组件，可参考上面的自定义列
 
-## column - list[type=action]
+## json > columns[{type=action}]
+```js
+data(){
+  return {
+    json:{
+      columns:[
+        {
+          type:'action',
+          ...
+        }
+      ]
+    }
+  }
+}
+```
 
 > 主要用于操作按钮列（新增、编辑、删除）
 
@@ -924,7 +952,7 @@ data(){
 | prop       | 按钮映射字段 | `Object/String`         | 参考上文 Demo                                                         |   无   |
 | val        | 根据值去映射 | Object                  | 参考上文 Demo                                                         |   无   |
 
-## 事件
+## agilityTable组件事件
 
 | 参数              | 说明          | 类型                     | 可选值           | 默认值 |
 | :---------------- | :------------ | :----------------------- | :--------------- | :----: |
@@ -934,4 +962,4 @@ data(){
 | @sort-change      | 本地排序事件  | Function({column,prop,order }) | 参考上文使用方法 |   无   |
 | @selection-change | 多选框        | Function([row])                | 参考 ElmentUI    |   无   |
 
-> 目前只有@handleChange、@handleAction、@handleCellClick 为新增自定义事件，其它为原生事件
+> @handleChange、@handleAction、@handleCellClick 为新增的自定义事件，其它为原生事件

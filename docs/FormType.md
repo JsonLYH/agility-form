@@ -1,9 +1,4 @@
-# 控件类型
-
-基于 ElementUI 二次封装的组件，主要给 RocketForm 和 SearchForm 提供服务。
-除自定义参数以外，所有属性都和 ElementUI 保持一致。
-
-## 控件类型列表
+# 控件类型列表
 
 1. `type='text'`文本框
 2. `type='textarea'`文本域

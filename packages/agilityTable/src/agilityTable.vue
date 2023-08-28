@@ -2,6 +2,7 @@
   <div class="agility-table-container" :class="{ auto: isFullScreen }" :id="createTableId">
     <div
       class="action-header"
+      :style="config.actionHeaderStyle || { }"
       v-if="
         config.title || $slots.action || config.actionList || config.toolbar
       "
@@ -34,8 +35,7 @@
                   :type="btn.type || 'primary'"
                   v-if="isShowAction(btn)"
                   @click="() => $emit('handleOperate', { ...btn, index })"
-                  >{{ btn.text }}</el-button
-                >
+                  >{{ btn.text }}</el-button>
               </template>
             </template>
           </div>
@@ -69,6 +69,7 @@
           <!-- 工具条 -->
           <tool-bar
             v-if="config.toolbar"
+            :toolBarIncludes="config.toolBarIncludes"
             :columns="config.columns"
             :id="createTableId"
             @handleReload="handleReload"
@@ -151,7 +152,7 @@
               </template>
             </el-table-column>
           </template>
-          <!-- 非跨行表头 -->
+          <!-- 非多级表头 -->
           <Column
             v-else
             :item="item"
@@ -180,9 +181,15 @@
 </template>
 
 <script>
+import { isEmpty } from '../../utils/commonUtils'
 import ToolBar from './ToolBar';
 import Column from './Column';
 export default {
+  provide() {
+    return {
+      $tableThis: this,
+    };
+  },
   name: 'agilityTable',
   inheritAttrs: false,
   props: {
@@ -190,28 +197,28 @@ export default {
     border: {
       type: Boolean,
       default() {
-        return undefined;
+        return false;
       },
     },
-    column: Array,
+    columns: Array,
     pagination: Object,
     pageSizes: Array,
     showPagination: {
       type: Boolean,
       default() {
-        return undefined;
+        return false;
       },
     },
     toolbar: {
       type: Boolean,
       default() {
-        return undefined;
+        return false;
       },
     },
   },
   data() {
     return {
-      size:(this.json && this.json.size) || this.$attrs.size || this.$agility.size,
+      size:(this.json && this.json.size) || this.$attrs.size || this.$agility.tableSize,
       isFullScreen: false,
       pageSize: 0, // 缓存每页条数，只有在切换每页条数时使用
     };
@@ -226,17 +233,20 @@ export default {
       let json = {};
       // 判断是JSON方式还是传统方式
       if (this.json) {
-        json = this.json;
+        json = this.desensitizeHandler(this.json);
       } else {
-        json = {
-          ...this.$attrs,
-          border: this.border,
-          pagination: this.pagination,
-          pageSizes: this.pageSizes,
-          showPagination: this.showPagination,
-          toolbar: this.toolbar,
-          columns: this.column,
-        };
+        json = this.desensitizeHandler(
+          {
+            ...this.$attrs,
+            border: this.border,
+            pagination: this.pagination,
+            pageSizes: this.pageSizes,
+            showPagination: this.showPagination,
+            toolbar: this.toolbar,
+            columns: this.columns,
+            toolBarIncludes:this.$attrs.toolBarIncludes || ['reload', 'density', 'setColumn', 'fullScreen']
+          }
+        );
       }
       /**
        * 处理全局配置
@@ -261,6 +271,23 @@ export default {
   },
   components: { ToolBar, Column },
   methods: {
+    // 脱敏处理
+    desensitizeHandler(json) { 
+      json.columns.forEach((colItem) => {
+        // 脱敏类型
+        if (colItem.type == 'desensitize') {
+          let prop = colItem.prop;
+          let desensitizeDefaultVal= !isEmpty(colItem.desensitizeDefaultVal) ? colItem.desensitizeDefaultVal : true;
+          json.data.forEach((dataItem) => {
+            if (prop in dataItem) { 
+              // 默认脱敏
+              this.$set(dataItem, `${prop}_desensitize`, desensitizeDefaultVal);
+            }
+          });
+        }
+      });
+      return json;
+    },
     getCellStyle({ column }) {
       // TODO 针对 Safari表格 width 与 showOverflowTooltip 共存异常
       const tempWidth = column.realWidth || column.width;

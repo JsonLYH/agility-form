@@ -8,7 +8,7 @@
     :error="item.error"
     :show-message="item.showMessage"
     :inline-message="item.inlineMessage"
-    :size="item.size || $agility.size"
+    :size="item.size || $agility.formSize"
     :class="['oc-form-item', item.class]"
   >
     <!-- 全局注册自定义form-item -->
