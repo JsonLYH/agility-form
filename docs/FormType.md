@@ -19,7 +19,6 @@
 17. `type='link'`文字链接，类似于a标签
 18. `type='button'`按钮组件
 19. `type='label'`文本组件
-20. `type='table'` 支持表单中内嵌表格组件
 
 ### 自定义参数
 
