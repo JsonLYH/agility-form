@@ -346,20 +346,19 @@ export default {
      * @param {sizeVal} 条数
      */
     handleSizeChange(val) {
-      let page = this.config.pagination.pageNum;
       // 缓存当前选择的每页条数，在页码切换的时候，需要保持同步
       this.pageSize = val;
       // 同步分页数据给父组件
       this.$emit('update:pagination', {
         pageSize: val,
-        pageNum: page,
+        pageNum: 1,
         total: this.config.pagination.total,
       });
       this.$emit('update:json', {
         ...this.config,
         pagination: {
           pageSize: val,
-          pageNum: page,
+          pageNum: 1,
           total: this.config.pagination.total,
         },
       });
@@ -370,6 +369,14 @@ export default {
      * @param {val} 页码
      */
     handleCurrentChange(val) {
+      this.$emit('update:json', {
+        ...this.config,
+        pagination: {
+          pageSize: this.config.pagination.pageSize,
+          pageNum: val,
+          total: this.config.pagination.total,
+        },
+      });
       this.$emit('handleChange', val);
     },
   },
