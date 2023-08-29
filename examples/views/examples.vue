@@ -151,10 +151,6 @@ export default {
         ...this.queryForm, // 查询表单数据
         ...this.pagination, // 默认分页数据
       };
-      // this.$request.get('/basic/list', data).then((res) => {
-      //   this.tableJson.data = res.list.slice(0, 5);
-      //   this.tableJson.pagination.total = res.total;
-      // });
     },
     /**
      * 列点击

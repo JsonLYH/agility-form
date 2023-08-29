@@ -50,6 +50,12 @@ Vue.use(agilityForm);
         ],
       };
     },
+    methods:{
+      // 查询
+      getTableData(){
+        
+      }
+    }
   };
 </script>
 ```

@@ -175,10 +175,6 @@
           ...this.queryForm, // 查询表单数据
           ...this.pagination, // 默认分页数据
         };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        //   this.tableJson.pagination.total = res.total;
-        // });
       },
       /**
        * 列点击
@@ -227,13 +223,14 @@
 :::demo
 
 ```html
-<agilityTable :json.sync="tableJson">
+<agilityTable @handleChange="handleChange" :json.sync="tableJson">
   <!-- 展开行插槽 -->
   <template v-slot:expand="scope">
     <div style="padding-left:20px;">
       <p>索引：{{scope.row.$index}}</p>
       <p>地址：{{scope.row.address}}</p>
       <p>手机号：{{scope.row.phone}}</p>
+      <p>邮箱：{{scope.row.email}}</p>
     </div>
   </template>
 </agilityTable>
@@ -257,11 +254,11 @@
               align: 'center',
             },
             {
-              prop: 'user_email',
+              prop: 'email',
               label: '邮箱',
             },
           ],
-          data: [{uid:1,user_email:'2220555360@qq.com',phone:17776607357,address:'广西南宁绿地中心'}],
+          data: [],
           // 分页对象
           pagination: {
             pageNum: 1,
@@ -272,9 +269,19 @@
       };
     },
     mounted() {
+      this.initData();
     },
     methods: {
-     
+      handleChange(page){
+        this.initData();
+      },
+      async initData(){
+        let result=await this.$axios.get('/api/getExRowData');
+        let data=result.data;
+        this.tableJson.pagination.total=data.data.total;
+        this.tableJson.data=data.data.data;
+        console.log("获取展开行数据",this.tableJson.data); 
+      }
     },
   };
 </script>
@@ -289,18 +296,34 @@
 :::demo
 
 ```html
+<!-- 表单 -->
+<agilitySearchForm
+  :json="searchJson"
+  :model.sync="queryForm"
+  @search="search"
+/>
 <!-- 表格区域 -->
-<agilityTable :json.sync="tableJson" @handleChange="getTableData" />
+<agilityTable :json.sync="tableJson" @handleChange="initData" />
 <script>
   export default {
     data() {
       return {
+        // 保存查询条件
+        queryForm: {},
+        searchJson: [
+          {
+            type: 'text',
+            model: 'user_name',
+            label: '用户',
+            placeholder: '请输入用户名称',
+          },
+        ],
         tableJson: {
           title: '用户列表',
           actionList: [
             {
               type: 'primary',
-              text: '操作按钮',
+              text: '操作按钮'
             },
           ],
           columns: [
@@ -310,7 +333,7 @@
               align: 'center'
             },
             {
-              prop: 'user_email',
+              prop: 'email',
               label: '邮箱',
               align: 'center'
             },
@@ -326,22 +349,21 @@
       };
     },
     mounted() {
-      this.getTableData();
+      this.initData();
     },
     methods: {
-      // 首页列表查询,page为子组件传递的页码，默认为1
-      getTableData(pageNum = 1) {
-        this.tableJson.pagination.pageNum = pageNum;
-        const data = {
-          ...this.queryForm, // 查询表单数据
-          ...this.tableJson.pagination, // 默认分页数据
-        };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        //   this.tableJson.pagination.total = res.total;
-        // });
+      search(pageNum){
+        this.tableJson.pagination.pageNum=1;
+        console.log("搜索表单数据",this.queryForm);
+        this.initData();
       },
-    },
+      async initData(){
+        let result=await this.$axios.get('/api/userList');
+        let data=result.data;
+        this.tableJson.pagination.total=data.data.total;
+        this.tableJson.data=data.data.data;
+      }
+    }
   };
 </script>
 ```
@@ -401,9 +423,6 @@
           ...this.queryForm, // 查询表单数据
           ...this.tableJson.pagination, // 默认分页数据
         };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        // });
       },
     },
   };
@@ -511,9 +530,6 @@
           ...this.queryForm, // 查询表单数据
           ...this.tableJsonRow.pagination, // 默认分页数据
         };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        // });
       },
     },
   };
@@ -580,9 +596,6 @@
           ...this.queryForm, // 查询表单数据
           ...this.tableJson.pagination, // 默认分页数据
         };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        // });
       },
     },
   };
@@ -739,9 +752,6 @@
           ...this.queryForm, // 查询表单数据
           ...this.tableJson.pagination, // 默认分页数据
         };
-        // this.$request.get('/basic/list', data).then((res) => {
-        //   this.tableJson.data = res.list.slice(0, 5);
-        // });
       },
       // 模拟复制功能
       handleCopy(row) {
