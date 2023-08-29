@@ -7,7 +7,11 @@
 ## 安装插件
 
 ```shell
+# yarn
 yarn add agility-form -S
+
+#npm
+npm i agility-form -S
 ```
 
 ## 组件注册

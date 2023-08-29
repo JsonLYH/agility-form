@@ -222,6 +222,66 @@
 
 :::
 
+## 展开行
+
+:::demo
+
+```html
+<agilityTable :json.sync="tableJson">
+  <!-- 展开行插槽 -->
+  <template v-slot:expand="scope">
+    <div style="padding-left:20px;">
+      <p>索引：{{scope.row.$index}}</p>
+      <p>地址：{{scope.row.address}}</p>
+      <p>手机号：{{scope.row.phone}}</p>
+    </div>
+  </template>
+</agilityTable>
+<script>
+  export default {
+    data() {
+      return {
+        queryForm:{
+
+        },
+        tableJson: {
+          title: '用户列表',
+          columns: [
+            {
+              type:'slot',
+              slotName:'expand'
+            },
+            {
+              prop: 'uid',
+              label: '用户ID',
+              align: 'center',
+            },
+            {
+              prop: 'user_email',
+              label: '邮箱',
+            },
+          ],
+          data: [{uid:1,user_email:'2220555360@qq.com',phone:17776607357,address:'广西南宁绿地中心'}],
+          // 分页对象
+          pagination: {
+            pageNum: 1,
+            pageSize: 20,
+            total: 0,
+          },
+        },
+      };
+    },
+    mounted() {
+    },
+    methods: {
+     
+    },
+  };
+</script>
+```
+
+:::
+
 ## 添加标题和操作按钮
 
 > 标题、操作按钮、工具条的布局可以使用actionHeaderStyle属性进行调整（工具条可以通过toolbar设置隐藏）
@@ -247,11 +307,12 @@
             {
               prop: 'uid',
               label: '用户ID',
-              align: 'left',
+              align: 'center'
             },
             {
               prop: 'user_email',
               label: '邮箱',
+              align: 'center'
             },
           ],
           data: [],
@@ -385,7 +446,6 @@
           ],
           data: [{uid:1,name:'张三',intrestName:'兴趣'}], // 表格渲染数据
           spanMethod: ({ row, column, rowIndex, columnIndex }) => {
-            console.log(rowIndex,columnIndex)
             if(rowIndex == 0){
               if(columnIndex == 0){
                 return [1,3];
@@ -963,3 +1023,4 @@ data(){
 | @selection-change | 多选框        | Function([row])                | 参考 ElmentUI    |   无   |
 
 > @handleChange、@handleAction、@handleCellClick 为新增的自定义事件，其它为原生事件
+
