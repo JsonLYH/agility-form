@@ -1,6 +1,6 @@
 {
   "name": "agility-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于Vue2+ElementUI开发的快速表单生成工具,通过JSON即可快速进行中后台表单、业务赋能.",
   "license": "MIT",
   "private": false,
