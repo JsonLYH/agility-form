@@ -11,7 +11,7 @@
                     <FormItem :key="index" :item="item" v-bind="item" :value="value[item.model]"
                         @input="(val) => handleInput(item, val)" />
                 </template>
-                <div ref="expandFlag" class="expandFlag"></div>
+                <div ref="expandFlag" class="expandFlag"></div> 
             </div>
             <div class="agility-action">
                 <el-button type="text" v-if="showFoldBtn" @click="isOpen = !isOpen" size="medium">{{ isOpen ? '收起' : '展开'

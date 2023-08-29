@@ -28,10 +28,10 @@
     "url": "https://github.com/JsonLYH/agility-form.git"
   },
   "keywords": [
+    "form",
     "agility-form",
     "lowcode",
-    "vue-rocket",
-    "rocket-render"
+    "vue"
   ],
   "main": "lib/agility-form.umd.js",
   "unpkg": "lib/agility-form.umd.js",
