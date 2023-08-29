@@ -110,12 +110,12 @@
             align="center"
           >
           </el-table-column>
-          <!-- 保留slot功能 -->
+          <!-- 保留el-table-column slot功能 -->
           <el-table-column
             v-else-if="item.type === 'slot'"
             :key="`col-${item.prop}-${i}`"
             v-bind="item"
-            type=""
+            :type="item.slotName==='expand'?'expand':''"
             :align="item.align || 'center'"
             :show-overflow-tooltip="
               item.showOverflowTooltip === undefined
