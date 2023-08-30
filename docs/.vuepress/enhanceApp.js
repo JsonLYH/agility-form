@@ -6,6 +6,7 @@ export default ({
 }) => {
   Vue.use(agilityForm, {
     border:true,
+    formSize:'mini'
   })
   Vue.prototype.$axios = Axios;
 }

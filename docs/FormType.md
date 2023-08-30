@@ -160,7 +160,6 @@
         },
         form: [
           {
-            'popper-append-to-body':true,
             type: 'select',
             model: 'userStatus',
             label: '用户状态',

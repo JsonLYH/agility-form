@@ -8,13 +8,14 @@ const install = function (Vue, options = {}) {
     // 表单搜索插件
     Vue.use(quickSearchForm);
     Vue.use(agilityTable);
+    console.log(options);
     let config = {
         /**
          * form/table全局尺寸
          * medium / small / mini
          */
-        tableSize: options.tableSize || !isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small',
-        formSize: options.formSize || !isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small',
+        tableSize: options.tableSize || (!isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small'),
+        formSize: options.formSize || (!isEmpty(Vue.prototype.$ELEMENT) ? Vue.prototype.$ELEMENT.size : 'small'),
         // table列中字段为空时，默认显示内容
         fieldEmptyTxt: options.fieldEmptyTxt || '--',
         // 搜索表单全局配置
@@ -40,6 +41,7 @@ const install = function (Vue, options = {}) {
         },
         agilityDesc: {},
     };
+    console.log(config);
     Vue.prototype.$agility = config;
 }
 

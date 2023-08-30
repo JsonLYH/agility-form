@@ -1,5 +1,5 @@
 <template>
-    <el-form class="agility-search-form-container" :class="{ dialog: type === 'dialog', 'agility-search-flex': mode == 'flex' }"
+    <el-form :size="$agility.formSize" class="agility-search-form-container" :class="{ dialog: type === 'dialog', 'agility-search-flex': mode == 'flex' }"
         ref="searchForm" :model="value" :inline="true" @submit.native.prevent="search">
         <!-- flex布局-->
         <template v-if="mode == 'flex'">
@@ -76,6 +76,12 @@ export default {
         if (this.mode == 'flex') this.calcHeight();
     },
     methods: {
+        async initCssVar() { 
+            await this.$nextTick();
+            let containerDom = document.documentElement.querySelector('.el-select__tags');
+            console.log('containerDom',containerDom);
+            containerDom && containerDom.style.setProperty('--select-options-height',(this.formHeight-12)+'px');
+        },
         initSize() { 
             let formHeight = this.sizeMap[this.$agility.formSize];
             if (formHeight) {
@@ -83,6 +89,8 @@ export default {
             } else { 
                 this.formHeight = 62;
             }
+            // 初始化css变量
+            this.initCssVar();
         },
         /**
          * 触发自定义事件
@@ -212,6 +220,10 @@ export default {
         .agility-form-item {
             position: relative;
             flex: 1;
+            ::v-deep .el-select__tags {
+                max-height: var(--select-options-height);
+                overflow-y: auto;
+            }
         }
 
         .agility-action {
