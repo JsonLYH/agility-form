@@ -37,13 +37,6 @@ module.exports = {
                     './FormType',
                     './agilitySearchForm',
                     './agilityTable'
-                    // './FormType',
-                    // './Upload',
-                    // './SearchForm',
-                    // './RocketTable',
-                    // './RocketForm',
-                    // './RocketDesc',
-                    // './Release',
                 ],
             },
         ],
