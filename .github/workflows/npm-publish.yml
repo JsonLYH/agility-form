@@ -59,7 +59,7 @@ jobs:
       - name: 准备项目文档环境
         run: |
           mkdir ./dist/docs
-          cp ./dist/agility-form-doc ./dist/docs
+          cp -r ./dist/agility-form-doc ./dist/docs
           cp ./README.md ./dist/docs
           cp ./CHANGELOG.md ./dist/docs
 
