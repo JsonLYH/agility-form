@@ -1,6 +1,6 @@
 {
   "name": "agility-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "基于Vue2+ElementUI开发的快速表单生成工具,通过JSON即可快速进行中后台表单、业务赋能.",
   "license": "MIT",
   "private": false,
@@ -28,10 +28,10 @@
     "url": "https://github.com/JsonLYH/agility-form.git"
   },
   "keywords": [
+    "form",
     "agility-form",
     "lowcode",
-    "vue-rocket",
-    "rocket-render"
+    "vue"
   ],
   "main": "lib/agility-form.umd.js",
   "unpkg": "lib/agility-form.umd.js",

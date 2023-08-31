@@ -1,6 +1,6 @@
 module.exports = {
     title: 'agilityForm',
-    description: '一款基于Vue2.6开发的表单和表格渲染组件',
+    description: '一款基于Vue2开发的表单和表格渲染组件',
     base: '/agility-form-doc/',
     head: [
         [
@@ -15,7 +15,7 @@ module.exports = {
     themeConfig: {
         // background: `/images/`,
         // logo: 'logo.png',
-        // lastUpdated: 'Last Updated',
+        lastUpdated: 'Last Updated',
         nav: [
             {
                 text: '首页',
@@ -37,17 +37,9 @@ module.exports = {
                     './FormType',
                     './agilitySearchForm',
                     './agilityTable'
-                    // './FormType',
-                    // './Upload',
-                    // './SearchForm',
-                    // './RocketTable',
-                    // './RocketForm',
-                    // './RocketDesc',
-                    // './Release',
                 ],
             },
         ],
     },
-    plugins: ['demo-container', 'vuepress-plugin-smooth-scroll', '@vuepress/back-to-top'],
-    // plugins: [["/plugins/showCode", {}]],
+    plugins: ['demo-container', 'vuepress-plugin-smooth-scroll', '@vuepress/back-to-top']
 };
