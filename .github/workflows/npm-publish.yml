@@ -52,20 +52,24 @@ jobs:
           release_name: v${{steps.version.outputs.value}}
           draft: false
           prerelease: false
+
       - name: 打包生成文档
         run: npm run docs:build
+
       - name: 准备项目文档环境
         run: |
           mkdir ./dist/docs
           cp ./dist/agility-form-doc ./dist/docs
           cp ./README.md ./dist/docs
           cp ./CHANGELOG.md ./dist/docs
+
       - name: 发布到文档仓库
-      uses: s0/git-publish-subdir-action@master
-      env:
-        REPO: jsonlyh.github.io
-        BRANCH: master
-        FOLDER: ./dist/docs
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: s0/git-publish-subdir-action@master
+        env:
+          REPO: jsonlyh.github.io
+          BRANCH: master
+          FOLDER: ./dist/docs
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 文档生成成功通知
         run: echo npm 文档上传成功，请访问 https://jsonlyh.github.io/agility-form-doc
