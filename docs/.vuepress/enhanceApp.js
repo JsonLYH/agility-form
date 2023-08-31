@@ -5,7 +5,7 @@ export default ({
   Vue
 }) => {
   Vue.use(agilityForm, {
-    border:true,
+    border:true
   })
   Vue.prototype.$axios = Axios;
 }

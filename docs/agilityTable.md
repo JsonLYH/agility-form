@@ -538,7 +538,7 @@
 
 :::
 
-## 图片、url、link 渲染
+## 图片、url(a标签)、link(el-link)
 
 > 单元格可渲染图片、url、link 连接等，同时支持服务端返回 HTML 进行渲染。
 
@@ -997,7 +997,7 @@ data(){
 
 > 当 type='slot'时，需要指定 slotName，这样才能在 base-table 中嵌套组件，可参考上面的自定义列
 
-## json > columns[{type=action}]
+## 操作列对象属性 json > columns[{type=action}]
 ```js
 data(){
   return {
