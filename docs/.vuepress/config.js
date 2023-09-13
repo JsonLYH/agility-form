@@ -7,14 +7,14 @@ module.exports = {
             'link',
             {
                 rel: 'icon',
-                href: `/favicon.ico`,
+                href: `/images/icon.png`,
             },
         ],
     ],
     dest: 'dist/agility-form-doc',
     themeConfig: {
         // background: `/images/`,
-        // logo: 'logo.png',
+        logo: '/images/icon.png',
         lastUpdated: 'Last Updated',
         nav: [
             {
