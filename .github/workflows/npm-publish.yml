@@ -62,6 +62,7 @@ jobs:
           cp -r ./dist/agility-form-doc ./dist/docs
           cp ./README.md ./dist/docs
           cp ./CHANGELOG.md ./dist/docs
+          cp ./ads.txt ./dist/docs
 
       - name: 发布到文档仓库
         uses: s0/git-publish-subdir-action@master
