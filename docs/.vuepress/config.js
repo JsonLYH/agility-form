@@ -13,7 +13,7 @@ module.exports = {
         [
             'script',
             {
-                client: 'ca-pub-6727970703714205',
+                client: 'ca-pub-9650642607350023',
                 crossorigin: 'anonymous',
                 src:'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
             }
