@@ -1,7 +1,7 @@
 # 全局配置
 <InArticleAdsense
-    data-ad-client="ca-pub-6727970703714205"
-    data-ad-slot="9644373612">
+    data-ad-client="ca-pub-9650642607350023"
+    data-ad-slot="5006043037">
 </InArticleAdsense>
 | 参数           | 说明     | 类型   | 可选值   | 默认值 |
 | :------------- | :------- | :----- | :------- | :----: | --- |

@@ -1,7 +1,7 @@
 # 快速入门
 <InArticleAdsense
-    data-ad-client="ca-pub-6727970703714205"
-    data-ad-slot="9644373612">
+    data-ad-client="ca-pub-9650642607350023"
+    data-ad-slot="5006043037">
 </InArticleAdsense>
 ## 安装插件
 
