@@ -1,5 +1,8 @@
 # 全局配置
-
+<InArticleAdsense
+    data-ad-client="ca-pub-6727970703714205"
+    data-ad-slot="9644373612">
+</InArticleAdsense>
 | 参数           | 说明     | 类型   | 可选值   | 默认值 |
 | :------------- | :------- | :----- | :------- | :----: | --- |
 | elementuiGlobalConfig | elementui全局配置 | Object | 参考element-ui全局配置 |   { }   |

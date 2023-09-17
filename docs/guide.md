@@ -1,5 +1,8 @@
 # 快速入门
-
+<InArticleAdsense
+    data-ad-client="ca-pub-6727970703714205"
+    data-ad-slot="9644373612">
+</InArticleAdsense>
 ## 安装插件
 
 ```shell

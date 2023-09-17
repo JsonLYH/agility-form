@@ -10,6 +10,14 @@ module.exports = {
                 href: `/images/icon.png`,
             },
         ],
+        [
+            'script',
+            {
+                client: 'ca-pub-6727970703714205',
+                crossorigin: 'anonymous',
+                src:'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+            }
+        ]
     ],
     dest: 'dist/agility-form-doc',
     themeConfig: {
