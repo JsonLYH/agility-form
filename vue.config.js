@@ -9,6 +9,11 @@ module.exports = {
       template: 'public/index.html',
       filename: 'index.html',
     },
+    h5: {
+      entry: 'h5/main.js',
+      template: 'public/index.html',
+      filename: 'h5.html',
+    }
   },
   outputDir: 'dist/agility-form',
   publicPath: '/',
@@ -27,6 +32,7 @@ module.exports = {
       extensions: ['.js', '.vue'],
       alias: {
         '@': path.resolve(__dirname, 'examples'),
+        '@h5': path.resolve(__dirname, 'h5'),
       },
     },
   },

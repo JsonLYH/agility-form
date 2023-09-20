@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import examples from '@/views/examples.vue'
+import examples from '@h5/views/examples.vue'
 
 Vue.use(VueRouter)
 const routes = [
